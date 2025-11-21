@@ -656,7 +656,9 @@ body {
     min-height: 100vh;
     background: linear-gradient(135deg, #D2B48C 0%, #A0522D 100%);
     position: relative;
-    overflow: hidden;
+    padding: 40px 20px; 
+    background-attachment: fixed; 
+    overflow-x: hidden; 
 }
 
 .auth-page::before {
@@ -1010,10 +1012,18 @@ body {
 
 /* 每日小贴士（登录页面） */
 .daily-tips {
-    position: absolute;
+    /* 关键修改：不再绝对定位，改为固定在右下角，但增加层级处理 */
+    position: fixed; 
     bottom: 20px;
     right: 20px;
     z-index: 10;
+}
+
+/* 关键修改：针对高度较小的屏幕（比如笔记本），隐藏小贴士或者改变位置 */
+@media (max-height: 800px) {
+    .daily-tips {
+        display: none; /* 屏幕太矮时直接隐藏，保证登录框可见 */
+    }
 }
 
 .tips-card {
