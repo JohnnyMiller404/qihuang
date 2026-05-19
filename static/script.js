@@ -531,6 +531,11 @@ async function showKnowledgeDetail(id) {
             commentsHtml += '</div>';
         }
         
+        let videoHtml = '';
+        if (data.video_url) {
+            videoHtml = `<div class="detail-video"><video controls width="100%" style="border-radius: 8px; margin-bottom: 15px;"><source src="${data.video_url}" type="video/mp4">您的浏览器不支持视频播放。</video></div>`;
+        }
+        
         modalBody.innerHTML = `
             <div class="knowledge-detail">
                 <div class="detail-header">
@@ -538,10 +543,11 @@ async function showKnowledgeDetail(id) {
                     <div class="detail-tags"><span class="tag">${data.category}</span><span class="tag">${data.season}</span><span class="view-tag">👁 ${data.view_count} 次浏览</span></div>
                 </div>
                 <div class="detail-content">
-                    <section><h3>📖 详细介绍</h3><p>${data.content}</p></section>
-                    <section><h3>✨ 功效益处</h3><p>${data.benefits}</p></section>
-                    <section><h3>⚠️ 注意事项</h3><p>${data.precautions}</p></section>
-                    <section><h3>👥 适宜人群</h3><p>${data.suitable_crowd}</p></section>
+                    ${videoHtml}
+                    <section><h3>📖 详细介绍</h3><p>${(data.content || '').replace(/\n/g, '<br>')}</p></section>
+                    <section><h3>✨ 功效益处</h3><p>${(data.benefits || '').replace(/\n/g, '<br>')}</p></section>
+                    <section><h3>⚠️ 注意事项</h3><p>${(data.precautions || '').replace(/\n/g, '<br>')}</p></section>
+                    <section><h3>👥 适宜人群</h3><p>${(data.suitable_crowd || '').replace(/\n/g, '<br>')}</p></section>
                 </div>
                 <div class="detail-actions">
                     <button class="btn-favorite ${data.is_favorited ? 'favorited' : ''}" onclick="toggleFavorite(${data.id})">${data.is_favorited ? '❤️ 已收藏' : '🤍 收藏'}</button>
